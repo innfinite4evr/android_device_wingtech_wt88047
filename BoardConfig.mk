@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LOCAL_PATH := device/lenovo/wt86518
+LOCAL_PATH := device/qcom/wt86518
 
 TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
@@ -57,8 +57,8 @@ BOARD_RAMDISK_OFFSET     := 0x01000000
 BOARD_KERNEL_SEPARATED_DT := true
 BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/mkbootimg.mk
 TARGET_USES_UNCOMPRESSED_KERNEL := true
-TARGET_KERNEL_SOURCE := kernel/lenovo/msm8916
-TARGET_KERNEL_CONFIG := Mokee_A6000_defconfig
+TARGET_KERNEL_SOURCE := kernel/qcom/msm8916
+TARGET_KERNEL_CONFIG := mokee_wt86518_defconfig
 
 # ANT+
 BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
@@ -168,7 +168,7 @@ TARGET_RIL_VARIANT := caf
 include device/qcom/sepolicy/sepolicy.mk
 
 BOARD_SEPOLICY_DIRS += \
-    device/lenovo/wt86518/sepolicy
+    device/qcom/wt86518/sepolicy
 
 BOARD_SEPOLICY_UNION += \
     bluetooth_loader.te \
