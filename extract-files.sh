@@ -52,7 +52,7 @@ function extract() {
     done
 }
 
-BASE=../../../vendor/$VENDOR/$DEVICE/proprietary
+BASE=../../../vendor/$VENDOR/$DEVICE/system
 rm -rf $BASE/*
 
 extract ../../$VENDOR/$DEVICE/proprietary-files.txt $BASE
