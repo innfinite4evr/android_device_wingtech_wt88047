@@ -58,7 +58,7 @@ BOARD_RAMDISK_OFFSET     := 0x01000000
 BOARD_KERNEL_SEPARATED_DT := true
 BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/mkbootimg.mk
 TARGET_KERNEL_SOURCE := kernel/lenovo/wt86518
-TARGET_KERNEL_CONFIG := mokee_a6000_defconfig
+TARGET_KERNEL_CONFIG := mokee_wt86518_defconfig
 
 # ANT+
 BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
@@ -67,7 +67,6 @@ BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
 TARGET_USES_QCOM_MM_AUDIO := true
 BOARD_USES_ALSA_AUDIO := true
 AUDIO_FEATURE_ENABLED_FM := true
-AUDIO_FEATURE_LOW_LATENCY_PRIMARY := true
 
 # Bluetooth
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
@@ -118,6 +117,7 @@ USE_OPENGL_RENDERER := true
 EXTENDED_FONT_FOOTPRINT := true
 
 # GPS
+TARGET_GPS_HAL_PATH := $(DEVICE_PATH)/gps
 TARGET_NO_RPC := true
 
 # Init
@@ -156,6 +156,9 @@ TARGET_RECOVERY_QCOM_RTC_FIX := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGB_565"
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
 
+# FM
+TARGET_QCOM_NO_FM_FIRMWARE := true
+
 # Releasetools
 ADD_RADIO_FILES := true
 TARGET_RELEASETOOLS_EXTENSIONS := $(LOCAL_PATH)
@@ -167,13 +170,16 @@ TARGET_RIL_VARIANT := caf
 include device/qcom/sepolicy/sepolicy.mk
 
 BOARD_SEPOLICY_DIRS += \
-    device/lenovo/wt86518/sepolicy
+    $(VENDOR_PATH)/sepolicy
 
 BOARD_SEPOLICY_UNION += \
-    usb_uicc_daemon.te \
-    system_server.te \
+    bluetooth_loader.te \
+    healthd.te \
+    qseecomd.te \
+    surfaceflinger.te \
     wcnss_service.te \
-    atfwd.te
+    file_contexts \
+    property_contexts
 
 # QC PROPRIETARY
 ifneq ($(QCPATH),)
