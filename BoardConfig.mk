@@ -27,7 +27,8 @@ TARGET_BOARD_PLATFORM_GPU := qcom-adreno306
 TARGET_BOOTLOADER_BOARD_NAME := MSM8916
 TARGET_NO_BOOTLOADER := true
 
-# CPU
+# Architecture
+ifneq ($(WT86518_32_BIT),true)
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
@@ -39,29 +40,42 @@ TARGET_2ND_ARCH_VARIANT := armv7-a-neon
 TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a53
+
 TARGET_BOARD_SUFFIX := _64
 TARGET_USES_64_BIT_BINDER := true
+else
+TARGET_ARCH := arm
+TARGET_ARCH_VARIANT := armv7-a-neon
+TARGET_CPU_ABI := armeabi-v7a
+TARGET_CPU_ABI2 := armeabi
+TARGET_CPU_VARIANT := cortex-a53
+endif
+TARGET_BOARD_PLATFORM := msm8916
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno306
 
 # CPU
 TARGET_CPU_CORTEX_A53 := true
 
-# Kernel
-TARGET_KERNEL_ARCH := arm64
-TARGET_KERNEL_HEADER_ARCH := arm64
-TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
-TARGET_USES_UNCOMPRESSED_KERNEL := true
-BOARD_KERNEL_BASE := 0x80000000
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 earlyprintk androidboot.selinux=permissive
-BOARD_KERNEL_PAGESIZE := 2048
-BOARD_KERNEL_TAGS_OFFSET := 0x00000100
-BOARD_RAMDISK_OFFSET     := 0x01000000
-BOARD_KERNEL_SEPARATED_DT := true
-BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/mkbootimg.mk
-TARGET_KERNEL_SOURCE := kernel/lenovo/wt86518
-TARGET_KERNEL_CONFIG := mokee_wt86518_defconfig
-
 # ANT+
 BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
+
+# Kernel
+BOARD_CUSTOM_BOOTIMG_MK            := $(LOCAL_PATH)/mkbootimg.mk
+BOARD_KERNEL_CMDLINE               := androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 earlyprintk androidboot.selinux=permissive
+BOARD_KERNEL_SEPARATED_DT          := true
+BOARD_KERNEL_BASE                  := 0x80000000
+BOARD_KERNEL_PAGESIZE              := 2048
+BOARD_KERNEL_TAGS_OFFSET           := 0x00000100
+BOARD_RAMDISK_OFFSET               := 0x01000000
+TARGET_KERNEL_SOURCE               := kernel/wingtech/msm8916
+ifneq ($(WT86518_32_BIT),true)
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_CONFIG := wt86518_defconfig
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
+TARGET_KERNEL_HEADER_ARCH := arm64
+TARGET_USES_UNCOMPRESSED_KERNEL := true
+endif
+
 
 # Audio
 TARGET_USES_QCOM_MM_AUDIO := true
@@ -169,17 +183,13 @@ TARGET_RIL_VARIANT := caf
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
 
-BOARD_SEPOLICY_DIRS += \
-    $(VENDOR_PATH)/sepolicy
+BOARD_SEPOLICY_DIRS := device/lenovo/wt86518/sepolicy
 
 BOARD_SEPOLICY_UNION += \
-    bluetooth_loader.te \
-    healthd.te \
-    qseecomd.te \
-    surfaceflinger.te \
+    usb_uicc_daemon.te \
+    system_server.te \
     wcnss_service.te \
-    file_contexts \
-    property_contexts
+    atfwd.te
 
 # QC PROPRIETARY
 ifneq ($(QCPATH),)
