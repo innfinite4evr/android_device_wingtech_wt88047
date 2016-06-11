@@ -183,7 +183,7 @@ TARGET_RIL_VARIANT := caf
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
 
-BOARD_SEPOLICY_DIRS := device/lenovo/wt86518/sepolicy
+BOARD_SEPOLICY_DIRS += device/lenovo/wt86518/sepolicy
 
 BOARD_SEPOLICY_UNION += \
     usb_uicc_daemon.te \
