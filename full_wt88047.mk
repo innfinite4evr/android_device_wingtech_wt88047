@@ -15,17 +15,17 @@
 #
 
 # Inherit from those products. Most specific first.
-ifneq ($(WT86518_32_BIT),true)
+ifneq ($(WT88047_32_BIT),true)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 endif
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
-# Inherit from wt86518 device
-$(call inherit-product, device/lenovo/wt86518/device.mk)
+# Inherit from wt88047 device
+$(call inherit-product, device/wingtech/wt88047/device.mk)
 
 # Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := wt86518
-PRODUCT_NAME := full_wt86518
-PRODUCT_BRAND := Lenovo
-PRODUCT_MODEL := Lenovo A6000
-PRODUCT_MANUFACTURER := LENOVO
+PRODUCT_DEVICE := wt88047
+PRODUCT_NAME := full_wt88047
+PRODUCT_BRAND := Xiaomi
+PRODUCT_MODEL := Redmi 2
+PRODUCT_MANUFACTURER := Wingtech

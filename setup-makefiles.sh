@@ -1,7 +1,7 @@
 #!/bin/bash
 
-DEVICE=wt86518
-VENDOR=lenovo
+DEVICE=wt88047
+VENDOR=wingtech
 
 OUTDIR=vendor/$VENDOR/$DEVICE
 MAKEFILE=../../../$OUTDIR/$DEVICE-vendor-blobs.mk
@@ -76,7 +76,7 @@ endif
 EOF
 
 (cat << EOF) > ../../../$OUTDIR/$DEVICE-vendor.mk
-# Copyright (C) 2015 The Mokee OpenSource Project
+# Copyright (C) 2015 The CyanogenMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -114,7 +114,6 @@ PRODUCT_PACKAGES += \\
     libloc_ds_api
 
 PRODUCT_PACKAGES += \\
-    libHevcSwDecoder \\
     libtime_genoff
 
 \$(call inherit-product, vendor/$VENDOR/$DEVICE/$DEVICE-vendor-blobs.mk)
@@ -157,7 +156,7 @@ EOF
 
 LOCAL_PATH := \$(call my-dir)
 
-ifeq (\$(TARGET_DEVICE),wt86518)
+ifeq (\$(TARGET_DEVICE),wt88047)
 ifeq (\$(QCPATH),)
 
 include \$(CLEAR_VARS)
@@ -288,13 +287,31 @@ include \$(BUILD_PREBUILT)
 include \$(CLEAR_VARS)
 LOCAL_MODULE := libmm-abl
 LOCAL_MODULE_OWNER := $VENDOR
-LOCAL_SRC_FILES := system/vendor/lib64/libmm-abl.so
+LOCAL_SRC_FILES := proprietary/vendor/lib/libmm-abl.so
+LOCAL_MODULE_PATH := \$(TARGET_OUT_VENDOR_SHARED_LIBRARIES)
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_SUFFIX := .so
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+include \$(BUILD_PREBUILT)
+
+include \$(CLEAR_VARS)
+LOCAL_MODULE := libts_detected_face_hal
+LOCAL_MODULE_OWNER := $VENDOR
+LOCAL_SRC_FILES := proprietary/vendor/lib/libts_detected_face_hal.so
 LOCAL_MODULE_PATH := \$(TARGET_OUT_VENDOR_SHARED_LIBRARIES)
-LOCAL_MULTILIB := 64
-LOCAL_PROPRIETARY_MODULE := true
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_SUFFIX := .so
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+include \$(BUILD_PREBUILT)
+
+include \$(CLEAR_VARS)
+LOCAL_MODULE := libts_face_beautify_hal
+LOCAL_MODULE_OWNER := $VENDOR
+LOCAL_SRC_FILES := proprietary/vendor/lib/libts_face_beautify_hal.so
+LOCAL_MODULE_PATH := \$(TARGET_OUT_VENDOR_SHARED_LIBRARIES)
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_SUFFIX := .so
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 include \$(BUILD_PREBUILT)
 
 \$(shell mkdir -p \$(PRODUCT_OUT)/system/vendor/lib/egl && pushd \$(PRODUCT_OUT)/system/vendor/lib > /dev/null && ln -s egl/libEGL_adreno.so libEGL_adreno.so && popd > /dev/null)

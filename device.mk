@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-$(call inherit-product-if-exists, vendor/lenovo/wt86518/wt86518-vendor.mk)
+$(call inherit-product-if-exists, vendor/wingtech/wt88047/wt88047-vendor.mk)
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
@@ -138,7 +138,7 @@ PRODUCT_COPY_FILES += \
 # Keylayout
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
-    $(LOCAL_PATH)/keylayout/qpnp_pon.kl:system/usr/keylayout/qpnp_pon.kl
+#$(call inherit-product-if-exists, vendor/wingtech/wt88047/wt88047-vendor.mk)
 
 # Keylayout
 PRODUCT_COPY_FILES += \
